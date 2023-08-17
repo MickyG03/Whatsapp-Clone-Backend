@@ -49,10 +49,8 @@ app.use(cors());
 //routes
 app.use("/api/v1",routes)
 
-app.post('/test',(req,res)=>{});
-
 //http error handling
-app.use(async(err,req,res,next)=> {
+app.use(async(req,res,next)=> {
     next(createHttpError.NotFound("This route doesnot exist"))
 })
 
