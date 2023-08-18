@@ -1,5 +1,7 @@
+import createHttpError from "http-errors";
 import { createUser,signUser } from "../services/auth.service.js";
-import { generateToken } from "../services/token.service.js";
+import { generateToken,verifyToken } from "../services/token.service.js";
+import { findUser } from "../services/user.service.js";
 export const register = async (req,res,next)=>{
 
     try{
@@ -72,7 +74,7 @@ export const logout = async (req,res,next)=>{
     try{
         res.clearCookie('refreshtoken',{ path:"/api/v1/auth/refreshtoken" })
         res.json({
-            message:"logged out !", 
+            message:"logged out !",
         })
     }catch(error){
         next(error)
@@ -81,11 +83,26 @@ export const logout = async (req,res,next)=>{
 }
 
 export const refreshtoken = async (req,res,next)=>{
-
     try{
+        const refresh_token=req.cookies.refreshtoken;
+        if(!refresh_token) throw createHttpError.Unauthorized('Please Login.');
+        const check =await verifyToken(refresh_token,process.env.REFRESH_TOKEN_SECRET);
 
+        const user =await findUser(check.userId);
+        const access_token=await generateToken({userId:user._id},"1d",process.env.ACCESS_TOKEN_SECRET);
+
+        res.json({
+            access_token,
+            user:{
+                _id:user._id,
+                name:user.name,
+                email:user.email,
+                picture:user.picture,
+                status:user.status
+            }
+        })
     }catch(error){
-        next(error)
+        next(error);
     }
 
 }
