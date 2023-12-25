@@ -24,13 +24,13 @@ export const register = async (req,res,next)=>{
 
         res.json({
             message:"register success",
-            access_token,
             user:{
                 _id:newUser._id,
                 name:newUser.name,
                 email:newUser.email,
                 picture:newUser.picture,
-                status:newUser.status
+                status:newUser.status,
+                access_token,
             }
         })
     }catch(error){
@@ -54,13 +54,13 @@ export const login = async (req,res,next)=>{
 
         res.json({
             message:"Login success",
-            access_token,
             user:{
                 _id:user._id,
                 name:user.name,
                 email:user.email,
                 picture:user.picture,
-                status:user.status
+                status:user.status,
+                access_token,
             }
         })
     }catch(error){
@@ -98,7 +98,8 @@ export const refreshtoken = async (req,res,next)=>{
                 name:user.name,
                 email:user.email,
                 picture:user.picture,
-                status:user.status
+                status:user.status,
+                access_token,
             }
         })
     }catch(error){
