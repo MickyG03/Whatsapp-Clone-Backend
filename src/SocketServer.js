@@ -25,15 +25,16 @@ export default function (socket, io) {
     console.log("use joined convo:", conversation);
   });
 
-//   //send and receive message
-//   socket.on("send message", (message) => {
-//     let conversation = message.conversation;
-//     if (!conversation.users) return;
-//     conversation.users.forEach((user) => {
-//       if (user._id === message.sender._id) return;
-//       socket.in(user._id).emit("receive message", message);
-//     });
-//   });
+  //send and receive message
+  socket.on("send message", (message) => {
+    console.log("new message receiver----->", message);
+    let conversation = message.conversation;
+    if (!conversation.users) return;
+    conversation.users.forEach((user) => {
+      if (user._id === message.sender._id) return;
+      socket.in(user._id).emit("receive message", message);
+    });
+  });
 
 //   //typing
 //   socket.on("typing", (conversation) => {
