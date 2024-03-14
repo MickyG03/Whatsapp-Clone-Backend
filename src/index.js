@@ -48,7 +48,7 @@ const io= new Server(server,{
 
 io.on("connection",(socket)=>{
     logger.info("socket io connected.");
-    SocketServer(socket);
+    SocketServer(socket,io);
 })
 
 // handle server errors
