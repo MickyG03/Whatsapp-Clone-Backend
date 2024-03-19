@@ -47,23 +47,24 @@ export default function (socket, io) {
 
 //   //call
 //   //---call user
-//   socket.on("call user", (data) => {
-//     let userId = data.userToCall;
-//     let userSocketId = onlineUsers.find((user) => user.userId == userId);
-//     io.to(userSocketId.socketId).emit("call user", {
-//       signal: data.signal,
-//       from: data.from,
-//       name: data.name,
-//       picture: data.picture,
-//     });
-//   });
+  socket.on("call user", (data) => {
+    // console.log(data);
+    let userId = data.userToCall;
+    let userSocketId = onlineUsers.find((user) => user.userId == userId);
+    io.to(userSocketId.socketId).emit("call user", {
+      signal: data.signal,
+      from: data.from,
+      name: data.name,
+      picture: data.picture,
+    });
+  });
 //   //---answer call
-//   socket.on("answer call", (data) => {
-//     io.to(data.to).emit("call accepted", data.signal);
-//   });
+  socket.on("answer call", (data) => {
+    io.to(data.to).emit("call accepted", data.signal);
+  });
 
 //   //---end call
-//   socket.on("end call", (id) => {
-//     io.to(id).emit("end call");
-//   });
+  socket.on("end call", (id) => {
+    io.to(id).emit("end call");
+  });
 }
