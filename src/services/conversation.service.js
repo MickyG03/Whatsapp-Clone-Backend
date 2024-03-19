@@ -1,8 +1,9 @@
 import createHttpError from "http-errors";
 import { UserModel, ConversationModel } from "../models/index.js";
 
-export const doesConversationExist=async(sender_id,receiver_id)=>{
+export const doesConversationExist=async(sender_id,receiver_id, isGroup)=>{
 
+   if(isGroup === false){
     let convos = await ConversationModel.find({
         isGroup:false,
         $and:[
@@ -20,6 +21,21 @@ export const doesConversationExist=async(sender_id,receiver_id)=>{
     });
 
     return convos[0];
+   }
+   else{
+    let convo = await ConversationModel.findById(
+        isGroup
+    ).populate("users admin","-password").populate('latestMessage')
+
+    if(!convo) throw createHttpError.BadRequest('Something went wrong !');
+
+    convo = await UserModel.populate(convo,{
+        path:"latestMessage.sender",
+        select:"name email picture status",
+    });
+
+    return convo;
+   }
 };
 
 export const createConversation = async(data)=>{
