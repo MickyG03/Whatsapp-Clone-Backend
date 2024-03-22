@@ -119,6 +119,15 @@ and more in JS files of "Routes" directory.
 #### 9. Setup and Run the Whatsapp Web Frontend:
 See the "Getting started" section of [Whatsapp-Frontend] and get it up and running. Login to try the app.
 
+## Network Socket Flow Diagram
+![image](https://github.com/MickyG03/Whatsapp-Clone-Backend/assets/76037226/da722681-060b-49c9-8160-5fdd7b2756d3)
+
+![image](https://github.com/MickyG03/Whatsapp-Clone-Backend/assets/76037226/c7dfb079-637c-4dcc-886f-811887f8fdf2)
+
+![image](https://github.com/MickyG03/Whatsapp-Clone-Backend/assets/76037226/524ceb0f-3342-4964-9b3d-c2d74dc8c9a2)
+
+
+
 ## Tech
 For this project I have used following libraries:
 
